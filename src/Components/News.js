@@ -12,13 +12,13 @@ export default class News extends Component {
     super();
     this.state = {
       articles: [],
-      isLoading: true,
+      loading: true,
       page: 1,
     };
   }
 
-  async componentDidMount() {
-    let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=4fb100e2622e48a2858af64f06531373&page=1&pagesize=${this.props.pageSize}`;
+  async update() {
+    let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=4fb100e2622e48a2858af64f06531373&page=${this.state.page}&pagesize=${this.props.pageSize}`;
     this.setState({ loading: true });
     let data = await fetch(url);
     let parsedData = await data.json();
@@ -29,42 +29,22 @@ export default class News extends Component {
     });
   }
 
+  async componentDidMount() {
+    this.update();
+  }
+
   handlePrevPage = async () => {
-    let url = `https://newsapi.org/v2/top-headlines?country=${
-      this.props.country
-    }&category=${
-      this.props.category
-    }&apiKey=4fb100e2622e48a2858af64f06531373&page=${
-      this.state.page - 1
-    }&pageSize=${this.props.pageSize}`;
-    this.setState({ loading: true });
-    let data = await fetch(url);
-    let parsedData = await data.json();
     this.setState({
-      page: this.state.page,
-      articles: parsedData.articles,
-      loading: false,
+      page: this.state.page - 1,
     });
+    this.update();
   };
 
   handleNextPage = async () => {
-    let url = `https://newsapi.org/v2/top-headlines?country=${
-      this.props.country
-    }&category=${
-      this.props.category
-    }&apiKey=4fb100e2622e48a2858af64f06531373&page=${
-      this.state.page + 1
-    }&pageSize=${this.props.pageSize}`;
-    this.setState({ loading: true });
-
-    let data = await fetch(url);
-    let parsedData = await data.json();
-
     this.setState({
       page: this.state.page + 1,
-      articles: parsedData.articles,
-      loading: false,
     });
+    this.update();
   };
 
   render() {
@@ -73,20 +53,22 @@ export default class News extends Component {
         <h1 className="text-center">Trending News- Monkey News</h1>
         {this.state.loading && <Spinner />}
         <div className="row my-4">
-          {!this.state.loading && this.state.articles.map((element) => {
-            return (
-              <div className="col-md-4" key={element.url}>
-                <NewsItem
-                  title={element.title}
-                  description={element.description}
-                  imgUrl={element.urlToImage}
-                  newsUrl={element.url}
-                  author={element.author}
-                  time={element.publishedAt}
-                />
-              </div>
-            );
-          })}
+          {!this.state.loading &&
+            this.state.articles.map((element) => {
+              return (
+                <div className="col-md-4" key={element.url}>
+                  <NewsItem
+                    title={element.title}
+                    description={element.description}
+                    imgUrl={element.urlToImage}
+                    newsUrl={element.url}
+                    author={element.author}
+                    time={element.publishedAt}
+                    source={element.source.name}
+                  />
+                </div>
+              );
+            })}
         </div>
         <div className="d-flex justify-content-between">
           <button
