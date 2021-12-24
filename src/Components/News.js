@@ -9,6 +9,7 @@ const News = (props) => {
   const [page, setPage] = useState(1);
   const [totalResults, setTotalResults] = useState(0);
 
+
   const update = async () => {
     props.setProgress(10);
     let url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page}&pagesize=${props.pageSize}`;
@@ -49,7 +50,7 @@ const News = (props) => {
 
   return (
     <div className="container my-3">
-      <h1 className="text-center">
+      <h1 className={`text-center text-${props.mode==='dark'?'light': 'dark'}`}>
         MonkeyNews- Top {capitalize(props.category)} Headline
       </h1>
       {loading && <Spinner />}
@@ -64,7 +65,7 @@ const News = (props) => {
             {articles.map((element) => {
               return (
                
-                  <div className="col-md-4" key={element.url}>
+                  <div className="col-md-4 " key={element.url}>
                     <NewsItem
                       title={element.title}
                       description={element.description}
@@ -73,6 +74,7 @@ const News = (props) => {
                       author={element.author}
                       time={element.publishedAt}
                       source={element.source.name}
+                      mode={props.mode}
                     />
                   </div>
               );

@@ -2,9 +2,10 @@ import React from "react";
 import { Link } from 'react-router-dom'
 
 
-const Navbar= ()=> {
-    return (
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+const Navbar= (props)=> {
+  
+  return (
+      <nav className={`navbar navbar-expand-lg navbar-${props.mode} bg-${props.mode}`}>
         <div className="container-fluid">
           <Link className="navbar-brand" to="/">
             Monkey News
@@ -59,8 +60,12 @@ const Navbar= ()=> {
                   Technology
                 </Link>
               </li>
+              
             </ul>
-            
+            <div className={`form-check form-switch text-${props.mode==='dark'?'light': 'dark'}`}>
+              <input onClick={props.toggleMode} className="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
+              <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Enable Dark Mode</label>
+            </div>
           </div>
         </div>
       </nav>
