@@ -15,7 +15,7 @@ const NewsItem=(props)=> {
               : "https://s.yimg.com/ny/api/res/1.2/aqn6Ts48XLLKcfF.0a83IA--/YXBwaWQ9aGlnaGxhbmRlcjt3PTEyMDA7aD04MDA-/https://s.yimg.com/os/creatr-uploaded-images/2021-02/805b1be0-656c-11eb-adbf-db42c9e9d764"
           }
           className="card-img-top "
-          alt="..."
+          alt="..." style={{maxHeight: '50vh'}}
         />
         <div className="card-body">
           <h5 className="card-title">{title}</h5>
@@ -30,7 +30,7 @@ const NewsItem=(props)=> {
             href={newsUrl}
             rel="noreferrer"
             target="_blank"
-            className="btn btn-sm btn-primary"
+            className={`btn btn-sm btn-${props.mode==='dark'?'secondary':'primary'}`}
           >
             Read More
           </a>
