@@ -49,7 +49,7 @@ const News = (props) => {
   };
 
   return (
-    <div className="container my-3">
+    <div className="container my-5 py-5">
       <h1 className={`text-center text-${props.mode==='dark'?'light': 'dark'}`}>
         MonkeyNews- Top {capitalize(props.category)} Headline
       </h1>

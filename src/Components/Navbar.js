@@ -6,7 +6,7 @@ const Navbar = (props) => {
   let result = `${props.country}`.toUpperCase();
   return (
     <nav
-      className={`navbar navbar-expand-lg navbar-${props.mode} bg-${props.mode}`}
+      className={`navbar fixed-top navbar-expand-lg navbar-${props.mode} bg-${props.mode}`} 
     >
       <div className="container-fluid">
         <Link onClick={()=>{props.setCountry('in')}} className="navbar-brand" to="/in">
